@@ -2,7 +2,7 @@ const { userModel } = require('../lib/mysqlApi')
 const md5 = require('md5')
 const User = {
   async reg (ctx) {
-    var { name, psw } = ctx.request.body
+    var { name, password } = ctx.request.body
     let result = await userModel.getUserByName(name)
     if (result.length > 0) {
       return ctx.body = {
@@ -10,7 +10,7 @@ const User = {
         msg: '相同的用户名，注册失败'
       }
     }
-    let res = await userModel.regUser(name, md5(psw))
+    let res = await userModel.regUser(name, md5(password))
     if(res) {
       return ctx.body = {
         code: 0,
@@ -27,7 +27,11 @@ const User = {
     let { name } = ctx.request.query
     let res = await userModel.getUserByName(name)
     if (res.length > 0) {
-      return ctx.body = res
+      return ctx.body = {
+        code: 0,
+        msg: 'success',
+        data: res
+      }
     } else {
       return ctx.body = {
         code: -1,

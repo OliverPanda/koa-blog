@@ -6,11 +6,10 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const router = require('./routes/index')
-const session = require('koa-session') 
+const session = require('koa-session')
 
 // error handler
 onerror(app)
-
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']

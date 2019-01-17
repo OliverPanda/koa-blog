@@ -21,7 +21,6 @@ const Index = {
         user: res[0].name,
         uid: res[0].uid
       }
-      console.log(ctx.session)
       return ctx.body = {
         code: 0,
         msg: '登陆成功'
