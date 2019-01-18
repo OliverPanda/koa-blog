@@ -25,18 +25,16 @@ app.use(views(__dirname + '/views', {
 app.keys = ['im a newer secret'];
 const CONFIG = {
   key: 'userinfo',
-  maxAge: 60000, // 1分钟
+  maxAge: 1800000, // 1分钟
   autoCommit: true, /** (boolean) automatically commit headers (default true) */
   overwrite: true, /** (boolean) can overwrite or not (default true) */
   httpOnly: false, /** (boolean) httpOnly or not (default true) */
   signed: true, /** (boolean) signed or not (default true) */
   rolling: true, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
   renew: true, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
-};
-app.use(session(CONFIG, app));
-
+}
+app.use(session(CONFIG, app))
 app.use(router.routes(), router.allowedMethods())
-
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()

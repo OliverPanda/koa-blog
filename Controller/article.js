@@ -1,6 +1,6 @@
 const { articleModel } = require('../lib/mysqlApi')
 const Article = {
-  async post () {
+  async post (ctx) {
     const { title, content } = ctx.request.body
     if (!title || !content) {
       return ctx.body = {
@@ -8,7 +8,8 @@ const Article = {
         msg: '缺少标题或者内容'
       }
     }
-    let res = articleModel.postArticle(title, content)
+    let uid = ctx.session.uid
+    let res = articleModel.postArticle(uid, title, content)
     if (res) {
       return ctx.body = {
         code: 0,
@@ -21,7 +22,7 @@ const Article = {
       }
     }
   },
-  async modify () {
+  async modify (ctx) {
     const { aid, title, content } = ctx.request.query
     if (!aid) {
       return ctx.body = {
@@ -49,12 +50,20 @@ const Article = {
       }
     }
   },
-  async myArticle () {
+  async myArticle (ctx) {
+    var uid = ctx.session.uid
     let res = articleModel.getMyArticle(uid)
-    return ctx.body = {
-      code: 0,
-      msg: 'success',
-      data: res
+    if (res) {
+      return ctx.body = {
+        code: 0,
+        msg: 'success',
+        data: res
+      }
+    } else {
+      return ctx.body = {
+        code: -2,
+        msg: '数据库异常'
+      }
     }
   },
   async allArticle () {
