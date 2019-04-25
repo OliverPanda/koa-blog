@@ -1,4 +1,4 @@
-const { articleModel } = require('../lib/mysqlApi')
+const { articleModel } = require('../lib/mysqlModal')
 const Article = {
   async post (ctx) {
     const { title, content } = ctx.request.body

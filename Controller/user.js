@@ -1,4 +1,4 @@
-const { userModel } = require('../lib/mysqlApi')
+const { userModel } = require('../lib/mysqlModal')
 const md5 = require('md5')
 const User = {
   async reg (ctx) {
